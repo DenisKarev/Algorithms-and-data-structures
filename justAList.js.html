@@ -1,0 +1,176 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heap Sort Algorithm</title>
+</head>
+<body>
+    <h1 id="str_one"><i>List before reverse: </i><br></h1>
+    <h1 id="str_two"><i>List after reverse: </i><br></h1>
+    <h1 id="test"><i>JSON.stringify: </i><br></h1>
+</body>
+</html>
+ <script>
+
+class MyList {
+    node;
+    size;
+
+    constructor() {
+        // this.node = new myNode();
+        this.size = 0;
+    }
+
+    addFirst(v) {
+        if (v === undefined) {
+            return;
+        }
+        if (this.node === undefined) {
+            this.node = new MyNode();
+        }
+        if (this.node.value === undefined) {
+            this.node.value = v;
+        } else {
+            let newn = new MyNode(v)
+            newn.value = v;
+            newn.next = this.node;
+            this.node = newn;
+        }
+        this.size += 1;
+    }
+    delFirst() {
+        if (this.node === undefined) return false;
+        if (this.node.next === undefined) {
+            this.node.value = undefined;
+        } else {
+            this.node = this.node.next;
+        }
+        this.size -= 1;
+        return true;
+    }
+
+    isPresentIn(v) {
+        // let res = false;
+        if (this.node === undefined) return false;
+        else {
+            let curNode = this.node;
+            while (curNode !== undefined) {
+                if (curNode.value === v) {
+                    return true;
+                }
+                if (curNode.next === undefined) {
+                    return false;
+                }
+                curNode = curNode.next
+            }
+        }
+    }
+
+    addLast(v) {
+        if (v === undefined) {
+            return;
+        }
+        if (this.node === undefined) {
+            this.node = new MyNode();
+        } else {
+            let curNode = this.node;
+            while (curNode.next !== undefined) {
+                curNode = curNode.next;
+            }
+            let newn = new MyNode(v)
+            newn.value = v;
+            curNode.next = newn;
+        }
+        this.size += 1;
+    }
+
+    delLast() {
+        if (this.node === undefined) return false;
+        if (this.node.next === undefined) {
+            this.node.value = undefined;
+            return true;
+        } else {
+            let curNode = this.node;
+            let prevNode;
+            while (curNode.next !== undefined) {
+                prevNode = curNode;
+                curNode = curNode.next;
+            }
+            prevNode.next = undefined;
+            this.size -= 1;
+            return true;
+        }
+    }
+
+    reverseList() {
+        if (this.size < 2) {
+            return false;
+        } else {
+            let curNode = this.node;
+            let nextNode = curNode.next;
+            let prevNode = undefined;
+            // let nextNode = curNode.next;
+            // this.node = new MyNode(prevNode.value)
+            // this.size = 0;
+            curNode.next = prevNode;
+            while (nextNode !== undefined) {
+                // this.addFirst(curNode.value);
+                prevNode = curNode;
+                curNode = nextNode;
+                nextNode = nextNode.next;
+                curNode.next = prevNode;
+            }
+            this.node = curNode;
+        }
+    }
+
+    printList() {
+        if (this.node.value === undefined) {
+            return;
+        } else {
+            let res = '';
+            let curNode = this.node;
+            while (curNode !== undefined) {
+                res += curNode.value + ', ';
+                curNode = curNode.next;
+            }
+            return res;
+        }
+    }
+}
+
+class MyNode {
+    value;
+    next;
+    constructor(v) {
+        this.value = v;
+    }
+}
+
+const a = new MyList();
+
+let el1 = document.getElementById('str_one');
+let el2 = document.getElementById('str_two');
+let el3 = document.getElementById('test');
+
+// console.log('delFirst:', a.delFirst());
+// console.log('delLast:', a.delLast());
+a.addFirst(10);
+a.addFirst(11);
+a.addFirst(12);
+a.addFirst(13);
+a.addFirst(14);
+a.addLast(9);
+a.addLast(8);
+// console.log('isPresentIn:', a.isPresentIn(9));
+
+console.log('List before reverse', a.printList());
+el1.append(`${a.printList()}`);
+
+a.reverseList();
+console.log('List after reverse', a.printList());
+el2.append(`${a.printList()}`);
+
+el3.append(JSON.stringify(a))
+</script>
