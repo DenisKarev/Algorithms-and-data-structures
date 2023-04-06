@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heap Sort Algorithm</title>
+</head>
+<body>
+    <h1 id="str_one"><i>Array before sorting: </i><br></h1>
+    <h1 id="str_two"><i>Array after sorting: </i><br></h1>
+</body>
+</html>
+<script>
+
+// heap sort (piramidal)
+function sortHeap(arr) {
+    const size = arr.length;
+    for (let i = Math.round(size / 2 - 1); i >= 0; i--) {
+        makeHeap(arr, i, size)
+    }
+
+    for (let i = size - 1; i >= 0; i--) {
+        const temp = arr[i];
+        arr[i] = arr[0];
+        arr[0] = temp;
+        makeHeap(arr, 0, i);
+    }
+    return arr;
+}
+
+// make the sorting tree
+function makeHeap(arr, i, size) {
+    const lch = i * 2 + 1;
+    const rch = i * 2 + 2;
+    let largest = i;
+    if (lch < size && arr[lch] > arr[largest])
+        largest = lch;
+    if (rch < size && arr[rch] > arr[largest])
+        largest = rch;
+    if (i != largest) {
+        let temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        makeHeap(arr, largest, size)
+    }
+}
+
+// array
+let array = [3, -8, 7, 2, 1, -3, 0, 5, 4, 9, -1, 12, -6];
+console.log(`before sort :`, array);
+let el1 = document.getElementById('str_one');
+let el2 = document.getElementById('str_two');
+
+el1.append(` ${array}`);
+// document.write(`<h1><i>Before sorting:</i> ${array} <br>`);
+sortHeap(array);
+console.log(`after sort :`, array);
+el2.append(` ${array}`);
+
+// document.write(`<h1><i>After sorting:</i> ${sortHeap(array)}<br>`);
+</script>
