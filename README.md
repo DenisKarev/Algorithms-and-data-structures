@@ -19,7 +19,7 @@ ___
        25
 ```
 
-    looks like in my prog
+## looks like in my prog
 ```
 false-40
         true-20
